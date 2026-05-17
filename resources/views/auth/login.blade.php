@@ -15,7 +15,7 @@
                         </span>
                     </a>
                 </div>
-
+                @if(session('status')) <x-toastify :config="['text' => session('status'), 'closeOnClick' => true, 'position' => 'right', 'gravity' => 'top', 'closeButton' => true, 'timeout' => '5000', 'style.background' => 'linear-gradient(to right, #00b09b, #96c93d)']" />@endif
                 <x-card class="auth-card border-0 shadow-lg">
 
                     <x-card.body class="p-4 p-lg-5">
@@ -27,11 +27,11 @@
                             </div>
 
                             <h1 class="h3 fw-bold mb-2">
-                                Sign in with email
+                                {{ __('Sign in with email') }}
                             </h1>
 
                             <p class="text-muted mb-0">
-                                Welcome back. Please enter your credentials.
+                                {{ __('Welcome back. Please enter your credentials.') }}
                             </p>
 
                         </div>
@@ -50,34 +50,35 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <x-form.input type="email" name="email" label="Email Address" placeholder="Enter your email"
-                                required />
+                            <x-form.input type="email" name="email" id="email" label="{{ __('Email Address') }}"
+                                placeholder="Enter your email" value="{{ old('email') }}" />
 
-                            <x-form.input type="password" name="password" label="Password" placeholder="Enter your password"
-                                required autocomplete="current-password" />
+                            <x-form.input type="password" name="password" id="password" label="{{ __('Password') }}"
+                                placeholder="Enter your password" value="{{ old('password') }}"
+                                autocomplete="current-password" />
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        Remember me
+                                        {{ __('Remember me') }}
                                     </label>
                                 </div>
 
                                 <a href="{{ route('password.request') }}" class="small text-decoration-none">
-                                    Forgot password?
+                                    {{ __('Forgot password?') }}
                                 </a>
 
                             </div>
 
                             <x-button type="submit" theme="dark" class="w-100 py-2 fw-semibold auth-submit-btn">
-                                <span class="submit-text">Sign In</span>
+                                <span class="submit-text">{{ __('Sign In') }}</span>
 
                                 <span class="submit-loading d-none">
                                     <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                                    Signing in...
+                                    {{ __('Signing in...') }}
                                 </span>
                             </x-button>
 
@@ -104,3 +105,14 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            email.required = true;
+            password.required = true;
+        });
+    </script>
+@endpush

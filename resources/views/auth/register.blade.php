@@ -25,12 +25,9 @@
                             </div>
 
                             <h1 class="h3 fw-bold mb-2">
-                                Create your account
+                                {{ __('Create your account') }}
                             </h1>
 
-                            <p class="text-muted mb-0">
-                                Join us and start managing your workspace today.
-                            </p>
                         </div>
 
                         <form method="POST" action="{{ route('register') }}">
@@ -49,11 +46,11 @@
                                 placeholder="Confirm your password" required autocomplete="new-password" />
 
                             <x-button type="submit" theme="dark" class="w-100 py-2 fw-semibold auth-submit-btn">
-                                <span class="submit-text">Create Account</span>
+                                <span class="submit-text">{{ __('Create Account') }}</span>
 
                                 <span class="submit-loading d-none">
                                     <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                                    Creating account...
+                                    {{ __('Creating account...') }}
                                 </span>
                             </x-button>
 
@@ -61,9 +58,9 @@
 
                         <div class="text-center mt-4">
                             <p class="text-muted mb-0">
-                                Already have an account?
+                                {{ __('Already have an account?') }}
                                 <a href="{{ route('login') }}" class="fw-semibold text-decoration-none">
-                                    Sign in
+                                    {{ __('Sign In') }}
                                 </a>
                             </p>
                         </div>

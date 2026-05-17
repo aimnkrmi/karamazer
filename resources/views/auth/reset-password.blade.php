@@ -25,12 +25,8 @@
                             </div>
 
                             <h1 class="h3 fw-bold mb-2">
-                                Reset your password
+                                {{ __('Reset your password') }}
                             </h1>
-
-                            <p class="text-muted mb-0">
-                                Create a new secure password for your account.
-                            </p>
                         </div>
 
                         <form method="POST" action="{{ route('password.update') }}">
@@ -38,21 +34,23 @@
 
                             <input type="hidden" name="token" value="{{ request()->route('token') }}">
 
-                            <x-form.input type="email" name="email" label="Email Address" placeholder="Enter your email"
-                                :value="request()->email" required autofocus autocomplete="email" />
+                            <x-form.input type="email" name="email" label="{{ __('Email Address') }}"
+                                placeholder="{{ __('Enter your email') }}" :value="request()->email" required autofocus
+                                autocomplete="email" />
 
-                            <x-form.input type="password" name="password" label="New Password"
-                                placeholder="Create a new password" required autocomplete="new-password" />
+                            <x-form.input type="password" name="password" label="{{ __('New Password') }}"
+                                placeholder="{{ __('Create a new password') }}" required autocomplete="new-password" />
 
-                            <x-form.input type="password" name="password_confirmation" label="Confirm New Password"
-                                placeholder="Confirm your new password" required autocomplete="new-password" />
+                            <x-form.input type="password" name="password_confirmation"
+                                label="{{ __('Confirm New Password') }}" placeholder="{{ __('Confirm your new password') }}"
+                                required autocomplete="new-password" />
 
                             <x-button type="submit" theme="dark" class="w-100 py-2 fw-semibold auth-submit-btn">
-                                <span class="submit-text">Reset Password</span>
+                                <span class="submit-text">{{ __('Reset Password') }}</span>
 
                                 <span class="submit-loading d-none">
                                     <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                                    Resetting password...
+                                    {{ __('Resetting password...') }}
                                 </span>
                             </x-button>
                         </form>
@@ -60,7 +58,7 @@
                         <div class="text-center mt-4">
                             <a href="{{ route('login') }}" class="text-decoration-none fw-semibold">
                                 <i class="bi bi-arrow-left me-1"></i>
-                                Back to sign in
+                                {{ __('Back to sign in') }}
                             </a>
                         </div>
 
