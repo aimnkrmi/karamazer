@@ -1,10 +1,59 @@
-# Mazer UI Component Library
+# KaraMazer UI Component Library
 
 ## Overview
 
-This library provides a comprehensive suite of reusable Laravel Blade components built for the laravel system. Designed to integrate seamlessly with **Bootstrap 5** and the **Mazer Admin Template**, these components enforce UI consistency, reduce boilerplate HTML, and manage their own asset loading (CSS/JS) automatically via Laravel's `@push` directives.
+This project serves as a general Laravel starter template with **Laravel Fortify** pre-installed for robust headless authentication. It provides a comprehensive suite of reusable Laravel Blade components built specifically for the system. Designed to integrate seamlessly with **Bootstrap 5** and the **Mazer Admin Template**, these components enforce UI consistency, reduce boilerplate HTML, and manage their own asset loading (CSS/JS) automatically via Laravel's `@push` directives.
 
 Compatibility: Laravel 10.x / 11.x / 13.x
+
+## Sidebar Navigation (`config/menu.php`)
+
+The sidebar navigation is entirely data-driven and managed via the `config/menu.php` file. This allows you to easily manage headers, links, nested submenus, icons, and apply permission-based visibility without directly modifying Blade HTML.
+
+### Attributes
+
+| Attribute | Type   | Description                                       |
+| --------- | ------ | ------------------------------------------------- |
+| `header`  | string | Renders a section header                          |
+| `text`    | string | The display name of the menu item                 |
+| `route`   | string | The Laravel named route (e.g., `dashboard`)       |
+| `url`     | string | The literal URL path (if `route` is not used)     |
+| `icon`    | string | Bootstrap icon class (e.g., `bi bi-house`)        |
+| `can`     | string | Laravel Gate / Permission needed to view the item |
+| `submenu` | array  | An array of child menu items                      |
+
+### Example Configuration
+
+```php
+return [
+    [
+        'header' => 'Main Navigation',
+        'can' => 'view navigation'
+    ],
+    [
+        'text' => 'Dashboard',
+        'route' => 'dashboard',
+        'icon' => 'bi bi-house',
+        'can' => 'view dashboard'
+    ],
+    [
+        'text' => 'Participant',
+        'icon' => 'bi bi-person',
+        'submenu' => [
+            [
+                'text' => 'View Participants',
+                'route' => 'participants.index',
+                'can' => 'view participants'
+            ],
+            [
+                'text' => 'Create Participant',
+                'route' => 'participants.create',
+                'can' => 'create participants'
+            ]
+        ]
+    ]
+];
+```
 
 ## Features
 
