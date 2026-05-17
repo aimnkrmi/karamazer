@@ -58,6 +58,12 @@
                             $route = $menu['route'] ?? null;
                         @endphp
 
+                        @if(isset($menu['submenu']) && ($route || Route::has($route)))
+                            @php
+                                throw new \Exception('Sidebar item with submenu cannot have a route');
+                            @endphp
+                        @endif
+
                         @if (!isset($menu['submenu']) && (!$route || !Route::has($route)))
                             @continue
                         @elseif ($route || Route::has($route))
