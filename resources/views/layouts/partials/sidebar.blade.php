@@ -74,17 +74,9 @@
                                 $is_active = isset($menu['submenu']) && in_array(Route::currentRouteName(), array_column($menu['submenu'], 'route'));
                             @endphp
                         @endif
-                        {{-- @php
-                        $url = Route::has($menu['route']) ? route($menu['route']) : '#';
-                        $is_active = Route::currentRouteName() === $menu['route'] ? 'active' : '';
-                        $submenu_is_active = isset($menu['submenu']) && in_array(Route::currentRouteName(),
-                        array_column($menu['submenu'], 'route'));
-                        if ($submenu_is_active) {
-                        $is_active = 'active';
-                        }
-                        @endphp --}}
 
-                        <li class="sidebar-item {{ $is_active }} @isset($menu['submenu']) has-sub @endisset">
+
+                        <li class="sidebar-item {{ $is_active ? 'active' : ''}} @isset($menu['submenu']) has-sub @endisset">
                             <a @empty($menu['submenu']) href="{{ $url }}" @endempty class='sidebar-link'>
                                 <i class="@isset($menu['icon']) {{ $menu['icon'] }} @endisset "></i>
                                 <span>{{ $menu['text'] }}</span>
