@@ -64,6 +64,14 @@ return [
 
 ## Installation
 
+```bash
+git clone https://github.com/aimnkrmi/karamazer.git
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+```
+
 Because this is an internal component library, no Composer installation is required. Ensure your master layout includes the correct asset stacks for the components to push their scripts and styles to.
 
 In your `app.blade.php` or `master.blade.php`, ensure you have:
