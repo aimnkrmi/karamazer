@@ -4,7 +4,7 @@
 
 This project serves as a general Laravel starter template with **Laravel Fortify** pre-installed for robust headless authentication. It provides a comprehensive suite of reusable Laravel Blade components built specifically for the system. Designed to integrate seamlessly with **Bootstrap 5** and the **Mazer Admin Template**, these components enforce UI consistency, reduce boilerplate HTML, and manage their own asset loading (CSS/JS) automatically via Laravel's `@push` directives.
 
-Compatibility: Built on Laravel 13. May be adaptable to Laravel 10/11 with minor changes.
+Compatibility: Built on Laravel 13. 
 
 ## Sidebar Navigation (`config/menu.php`)
 
