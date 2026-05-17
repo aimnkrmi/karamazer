@@ -1,58 +1,294 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mazer UI Component Library
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+This library provides a comprehensive suite of reusable Laravel Blade components built for the laravel system. Designed to integrate seamlessly with **Bootstrap 5** and the **Mazer Admin Template**, these components enforce UI consistency, reduce boilerplate HTML, and manage their own asset loading (CSS/JS) automatically via Laravel's `@push` directives.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Compatibility: Laravel 10.x / 11.x / 13.x
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Form Abstraction:** Automatic handling of `old()` validation state and error displays.
+- **Asset Management:** Smart loading of heavy dependencies (DataTables, Flatpickr, Toastify) using `@once` and `@push`.
+- **Atomic Design:** Card and Form elements are broken down using explicit dot-notation (e.g., `x-form.input`, `x-card.body`).
+- **Data-Driven:** Support for passing raw PHP arrays into complex Javascript configurations safely via `@json`.
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Because this is an internal component library, no Composer installation is required. Ensure your master layout includes the correct asset stacks for the components to push their scripts and styles to.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+In your `app.blade.php` or `master.blade.php`, ensure you have:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```blade
+<head>
+    <!-- ... -->
+    @stack('css')
+</head>
+<body>
+    <!-- ... -->
+    @stack('js')
+</body>
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Usage
 
-## Contributing
+### 1. Alert (`x-alert`)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Description:
+Reusable Bootstrap 5 alert component with optional icons and dismissal support.
 
-## Code of Conduct
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `type` | string | `'primary'` | Bootstrap color theme (success, danger, etc.) |
+| `icon` | string | `null` | Bootstrap icon name (e.g., 'check-circle') |
+| `dismissible` | bool | `false` | Whether to show the close button |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Usage:
 
-## Security Vulnerabilities
+```blade
+<x-alert type="warning" icon="exclamation-triangle" dismissible>
+    Please update your profile information.
+</x-alert>
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Button (`x-button`)
 
-## License
+Description:
+Standardized button component with optional icon injection.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `type` | string | `'button'` | Button type (submit, button, reset) |
+| `theme` | string | `'primary'` | Bootstrap theme class |
+| `icon` | string | `null` | FontAwesome or Bootstrap icon class |
+
+Usage:
+
+```blade
+<x-button type="submit" theme="success" icon="bi bi-save">
+    Save Record
+</x-button>
+```
+
+### 3. Card Base (`x-card`)
+
+Description:
+Wrapper component for standard dashboard cards.
+
+Props & Slots:
+| Property | Type | Default | Description |
+|------|------|------|------|
+| `header` | slot/string | `null` | The card header content |
+| `footer` | slot/string | `null` | The card footer content |
+| `slot` | slot | - | Main body area |
+
+Usage:
+
+```blade
+<x-card>
+    <x-slot name="header">
+        <h4 class="card-title">Participant Selection</h4>
+    </x-slot>
+
+    <p>Main card contents go here.</p>
+</x-card>
+```
+
+### 4. Card Sub-Components (`x-card.body`, `x-card.text`, `x-card.link`)
+
+Description:
+Atomic wrappers for internal card structures.
+
+Props (`x-card.body`):
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `title` | string | `null` | Creates a `<h4 class="card-title">` |
+| `subtitle` | string | `null` | Creates a `<h6 class="card-subtitle">` |
+
+Usage:
+
+```blade
+<x-card>
+    <x-card.body title="Main Settings" subtitle="Configure system info">
+        <x-card.text>Some quick example text.</x-card.text>
+        <x-card.link href="#">Action Link</x-card.link>
+    </x-card.body>
+</x-card>
+```
+
+### 5. Datatable (`x-datatable`)
+
+Description:
+A massive jQuery DataTables wrapper that dynamically pushes CSS/JS and maps PHP configurations into Javascript. Also supports Select and Paging layout adjustments natively.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `id` | string | `'table'` | Unique DOM ID for the table |
+| `heads` | array | `[]` | Array of labels or specific column config arrays |
+| `config` | array | `[]` | DataTables API Config array |
+| `striped` | bool | `false` | Apply table-striped |
+| `bordered` | bool | `false` | Apply table-bordered |
+| `select` | bool | `false` | Enables DataTables Select extension |
+| `paging` | bool | `false` | Applies predefined paging layouts |
+
+Usage:
+
+```blade
+@php
+$heads = ['ID', 'Name', 'Action'];
+$config = [
+    'data' => [ [1, 'John Doe', '...'] ],
+];
+@endphp
+
+<x-datatable id="users" :heads="$heads" :config="$config" striped paging />
+```
+
+### 6. Flatpickr (`x-flatpickr`)
+
+Description:
+Advanced datepicker component utilizing Flatpickr. Automatically manages asset loading.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `name` | string | Required | Input name and ID |
+| `config` | array | `[]` | Flatpickr JSON configuration |
+| `label` | string | `null` | Input label text |
+| `placeholder` | string | `null` | Input placeholder |
+| `value` | string | `null` | Default predefined value |
+
+Usage:
+
+```blade
+<x-flatpickr
+    name="dob"
+    label="Date of Birth"
+    :config="['dateFormat' => 'Y-m-d', 'maxDate' => 'today']"
+/>
+```
+
+### 7. Form Input (`x-form.input`)
+
+Description:
+Standard text-based input field. Automatically links labels, manages `old()` data, and handles Bootstrap `is-invalid` states.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `name` | string | Required | HTML name and id attribute |
+| `type` | string | `'text'` | Input type (text, email, password, etc) |
+| `value` | string | `null` | Default value (fallback for old data) |
+| `label` | string | `null` | Field label |
+| `helperText`| string| `null` | Muted help text below input |
+| `required` | bool | `false` | Appends required attribute & red asterisk |
+
+Usage:
+
+```blade
+<x-form.input name="email" type="email" label="Email Address" required />
+```
+
+### 8. Form Textarea (`x-form.textarea`)
+
+Description:
+Textarea field supporting floating labels and standard validation states.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `name` | string | Required | Field name |
+| `rows` | int | `3` | Number of default rows |
+| `float` | bool | `null` | Enables Bootstrap form-floating layout |
+
+Usage:
+
+```blade
+<x-form.textarea name="description" label="Remarks" rows="5" />
+```
+
+### 9. Form Select (`x-form.select` & `x-form.options`)
+
+Description:
+Dropdown wrapper and options builder for clean `<select>` implementation.
+
+Props (`x-form.select`):
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `name` | string | `null` | DOM ID and Name |
+| `label`| string | `null` | Label for select |
+| `required` | bool | `false` | Appends red asterisk |
+
+Props (`x-form.options`):
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `options` | array | `[]` | Key-value array of choices |
+| `selected`| array | `[]` | Array of selected keys |
+
+Usage:
+
+```blade
+<x-form.select name="role_id" label="Select Role">
+    <x-form.options
+        :options="[1 => 'Admin', 2 => 'User']"
+        emptyOption="Please Select..."
+    />
+</x-form.select>
+```
+
+### 10. Checkboxes & Radios (`x-form.checklist`, `x-form.radio`)
+
+Description:
+List generators for arrays of checkboxes or radio inputs.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `name` | string | Required | Shared input name |
+| `options`| array | `[]` | PHP array format: `['value' => 'Label']` |
+| `checked/selected`| mixed | - | Values that should be checked |
+
+Usage:
+
+```blade
+<x-form.checklist
+    name="permissions"
+    label="Assign Permissions"
+    :options="['read' => 'Read', 'write' => 'Write']"
+    :checked="['read']"
+/>
+```
+
+### 11. Session Alert (`x-session-alert`)
+
+Description:
+A global alert renderer that automatically looks for `success`, `error`, `warning` keys in the session, or `$errors->any()`, and displays them.
+
+Usage:
+
+```blade
+<!-- Add this standard tag at the top of your layout container -->
+<x-session-alert />
+```
+
+### 12. Toastify (`x-toastify`)
+
+Description:
+A non-blocking notification pop-up leveraging the Mazer Toastify library.
+
+Props:
+| Prop | Type | Default | Description |
+|------|------|------|------|
+| `id` | string | `''` | Binds the toast to a specific element click |
+| `config` | array | `[]` | Configuration for the Toastify JS |
+
+Usage:
+
+```blade
+<button id="toastBtn">Show Toast</button>
+
+<x-toastify id="toastBtn" :config="['text' => 'Action Successful!', 'duration' => 3000]" />
+```
