@@ -64,7 +64,7 @@
                             @endphp
                         @endif
 
-                        @if (!isset($menu['submenu']) && (!$route || !Route::has($route)))
+                        @if (!isset($menu['submenu']) && (!$route && !Route::has($route)))
                             @continue
                         @elseif ($route || Route::has($route))
                             @php
