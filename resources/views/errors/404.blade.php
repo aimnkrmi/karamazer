@@ -3,7 +3,7 @@
 @section('title', '404 - Not Found')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/error.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/error.css') }}">
 @endpush
 
 @section('content')

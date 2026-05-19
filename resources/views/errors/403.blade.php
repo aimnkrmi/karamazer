@@ -3,7 +3,7 @@
 @section('title', '403 - Forbidden')
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/error.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/error-403.css') }}">
 @endpush
 
 @section('content')
