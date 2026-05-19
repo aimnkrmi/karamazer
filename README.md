@@ -4,7 +4,7 @@
 
 This project serves as a general Laravel starter template with **Laravel Fortify** pre-installed for robust headless authentication. It provides a comprehensive suite of reusable Laravel Blade components built specifically for the system. Designed to integrate seamlessly with **Bootstrap 5** and the **Mazer Admin Template**, these components enforce UI consistency, reduce boilerplate HTML, and manage their own asset loading (CSS/JS) automatically via Laravel's `@push` directives.
 
-Compatibility: Built on Laravel 13. 
+Compatibility: Built on Laravel 13.
 
 ## Sidebar Navigation (`config/menu.php`)
 
@@ -240,8 +240,10 @@ Props:
 | `type` | string | `'text'` | Input type (text, email, password, etc) |
 | `value` | string | `null` | Default value (fallback for old data) |
 | `label` | string | `null` | Field label |
+| `classLabel`| string | `null` | Additional classes for the label component |
 | `helperText`| string| `null` | Muted help text below input |
 | `required` | bool | `false` | Appends required attribute & red asterisk |
+| `errorBag` | string | `''` | Target Laravel Validation Error Bag |
 
 Usage:
 
