@@ -3,8 +3,8 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ asset("assets/compiled/svg/logo.svg") }}" alt="Logo"
-                            srcset=""></a>
+                    <a href="{{ route('dashboard') }}"><img class="ms-1 mt-2" style="height: 25px" id="logo"
+                            src="{{ asset("assets/images/logo/logo-light.svg") }}" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -54,16 +54,12 @@
                             @continue(!auth()->user()?->can($menu['can']))
                         @endisset
 
-                        @php
-                            $route = $menu['route'] ?? null;
-                        @endphp
-
+                        @php $route = $menu['route'] ?? null; @endphp
                         @if(isset($menu['submenu']) && ($route || Route::has($route)))
                             @php
                                 throw new \Exception('Sidebar item with submenu cannot have a route');
                             @endphp
                         @endif
-
                         @if (!isset($menu['submenu']) && (!$route && !Route::has($route)))
                             @continue
                         @elseif ($route || Route::has($route))
@@ -73,6 +69,15 @@
                             @endphp
                         @elseif (isset($menu['submenu']))
                             @php
+                                $submenu_available = false;
+                                foreach ($menu['submenu'] as $submenu) {
+
+                                    if (!isset($submenu['can']) || ($submenu['can'] && auth()->user()?->can($submenu['can']))) {
+                                        $submenu_available = true;
+                                    }
+                                }
+                                if (!$submenu_available)
+                                    continue;
                                 $submenu_is_active = isset($menu['submenu']) && in_array(Route::currentRouteName(), array_column($menu['submenu'], 'route'));
                                 if ($submenu_is_active) {
                                     $is_active = 'active';
@@ -81,8 +86,7 @@
                             @endphp
                         @endif
 
-
-                        <li class="sidebar-item {{ $is_active ? 'active' : ''}} @isset($menu['submenu']) has-sub @endisset">
+                        <li class="sidebar-item {{ $is_active ? 'active' : '' }} @isset($menu['submenu']) has-sub @endisset">
                             <a @empty($menu['submenu']) href="{{ $url }}" @endempty class='sidebar-link'>
                                 <i class="@isset($menu['icon']) {{ $menu['icon'] }} @endisset "></i>
                                 <span>{{ $menu['text'] }}</span>
